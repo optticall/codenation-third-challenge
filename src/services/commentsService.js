@@ -21,7 +21,7 @@ const commentsService = {
     },
     get: (recipeSlug) => (localStorageWrapper.get(NAMESPACE) || {})[recipeSlug] || [],
     delete: (recipeSlug, target) => {
-        if (!isLogged) {
+        if (!isLogged()) {
             throw new Error('User not logged')
         }
 

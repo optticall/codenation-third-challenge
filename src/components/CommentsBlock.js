@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import  commentsService from '../services/commentsService';
 import { slugify } from '../helpers';
+import { getUser } from '../services/loginService';
 
 class CommentsBlock extends Component {
     state = {
@@ -20,12 +21,21 @@ class CommentsBlock extends Component {
     hadleSubmit = () => {
         if(this.state.newComment === '')
             return this.setState({ error: "Comment can not be Empty" })
-
         try {
-            commentsService.insert(slugify(this.props.recipe.title), this.state.newComment)
+            commentsService.insert(slugify(this.props.recipe.title), this.state.newComment)           
+            this.componentWillMount();
         } catch (err){
             this.setState({ error: err.message });
         }
+    }
+
+    handleDelete = (commentToDelete) => {
+        try{
+            commentsService.delete(slugify(this.props.recipe.title), commentToDelete);
+            this.componentWillMount();
+        } catch (err){
+            this.setState({ error: err.message });
+        } 
     }
 
     renderComment = (comment) => (
@@ -35,8 +45,9 @@ class CommentsBlock extends Component {
                 <strong className="d-block text-gray-dark">@{comment.author}</strong>
                 {comment.text}
             </p>
-            {/* Icone deve aparecer somente quando o comentario for do usuario logado */}
-            <FontAwesomeIcon icon="trash"/>
+            { getUser().username === comment.author 
+                ? <FontAwesomeIcon icon="trash" type="button" onClick={() => this.handleDelete(comment) }/>
+                : ''}
         </div>
     )
 
