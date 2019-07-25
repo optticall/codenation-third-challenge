@@ -5,7 +5,8 @@ import CommentsBlock from './CommentsBlock'
 const RecipePage = ({
     recipe
 }) => (
-    <div>
+    recipe 
+    ? <div>
         <img className="img-fluid" src={recipe.thumbnail} alt="" />
         <div className="card-body">
             <h5 className="card-title">{recipe.title}</h5>
@@ -14,7 +15,8 @@ const RecipePage = ({
             </p>
         </div>
         <CommentsBlock recipe={recipe} />
-    </div>
+      </div>
+    : ''
 )
 
 RecipePage.propTypes = {

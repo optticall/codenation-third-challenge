@@ -21,6 +21,7 @@ class CommentsBlock extends Component {
     hadleSubmit = () => {
         if(this.state.newComment === '')
             return this.setState({ error: "Comment can not be Empty" })
+
         try {
             commentsService.insert(slugify(this.props.recipe.title), this.state.newComment)           
             this.componentWillMount();

@@ -21,7 +21,7 @@ const Home = ({
             <RecipeItem 
                 key={index} 
                 searchString={searchString} 
-                recipe={recipe} 
+                {...recipe} 
             />   
         )}
     </div>

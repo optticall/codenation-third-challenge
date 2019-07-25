@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
  * mas não é o ideal.
  */ 
 const highlightedText = (texto, higlight) => {
-    const parts = texto.split(new RegExp(`(${higlight})`, 'gi'));
+    const parts = (texto) ? texto.split(new RegExp(`(${higlight})`, 'gi')) : [];
     return <span> { parts.map((part, i) => 
         part.toLowerCase() === higlight.toLowerCase() 
         ? <mark key={i}>{part}</mark> 
@@ -16,17 +16,17 @@ const highlightedText = (texto, higlight) => {
     )} </span>;
 }
 
-const RecipeItem = ({recipe = {}, searchString = ''}) => {
-    const link = recipe.title ? `/recipe/${slugify(recipe.title)}` : '/';
+const RecipeItem = ({title, ingredients, thumbnail, searchString = ''}) => {
+    const link = (title) ? `/recipe/${slugify(title)}` : '/';
     return (
     <div className="col-sm-3 mt-4">
         <Link to={ link }>
             <div className="card">
-                <img className="card-img-top img-fluid" src={recipe.thumbnail} alt="" />
+                <img className="card-img-top img-fluid" src={thumbnail} alt="" />
                 <div className="card-body">
-                    <h5 className="card-title">{highlightedText(recipe.title, searchString)}</h5>
+                    <h5 className="card-title">{highlightedText(title, searchString)}</h5>
                     <p className="card-text">
-                        <strong>Ingredients: </strong>{highlightedText(recipe.ingredients, searchString)}
+                        <strong>Ingredients: </strong>{highlightedText(ingredients, searchString)}
                     </p>
                 </div>
             </div>
