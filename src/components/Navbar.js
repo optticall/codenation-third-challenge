@@ -5,7 +5,8 @@ import logo from '../logo.svg';
 import loginService from '../services/loginService'
 
 const Navbar = ({
-    searchString = ''
+    searchString = '',
+    ...props
 }) => (
     <nav className="navbar fixed-top navbar-expand-sm navbar-dark bg-dark">
         <div className="navbar-brand col-1">
@@ -15,7 +16,7 @@ const Navbar = ({
         <div className="form-group justify-content-center row col-10 my-2">
             <input
                 value={searchString}
-                onChange={({target}) => {target.value}}
+                onChange={({target}) => props.history.push(`/${target.value}`) }
                 className="form-control col-9 mr-2"
                 type="search"
                 placeholder="Search"

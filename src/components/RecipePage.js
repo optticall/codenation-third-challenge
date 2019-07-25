@@ -6,11 +6,11 @@ const RecipePage = ({
     recipe
 }) => (
     <div>
-        <img className="img-fluid" src="https://via.placeholder.com/350x300" alt="" />
+        <img className="img-fluid" src={recipe.thumbnail} alt="" />
         <div className="card-body">
-            <h5 className="card-title">TITLE HERE</h5>
+            <h5 className="card-title">{recipe.title}</h5>
             <p className="card-text">
-                <strong>Ingredients: </strong>INGREDIENTS HERE
+                <strong>Ingredients: </strong>{recipe.ingredients}
             </p>
         </div>
         <CommentsBlock />

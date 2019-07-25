@@ -6,6 +6,15 @@ const Home = ({
     recipes = [],
     searchString = ''
 }) => {
+
+    recipes = (searchString !== "") ? filtrar(searchString) : recipes;
+
+    function filtrar(searchString) {
+        return recipes.filter( recipe => 
+          recipe.title.toLowerCase().indexOf(searchString.toLowerCase()) > -1 || 
+          recipe.ingredients.toLowerCase().indexOf(searchString.toLowerCase()) > -1 )
+    }
+
     return (
     <div className="row">
         { recipes.map( (recipe, index) => 

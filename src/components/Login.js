@@ -1,12 +1,41 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { login, register } from '../services/loginService';
 
 class Login extends Component {
-    constructor(props) {
-        super(props)
+    state = {
+        username: '',
+        password: '',
+        error: ''
+    }
+
+    handleLogin = e => {
+        e.preventDefault();
+        
+        try { 
+            login(this.state);
+            this.props.history.push("/");
+        } catch (err) {
+            this.setState({ error: err.message })
+        }
+    }
+
+    hangleRegister = e => {
+        e.preventDefault();
+        
+        if(this.state.username === '' || !this.state.password === '')
+            return this.setState({ error: 'Usuário ou senha não pode ser vazio!'});
+            
+        try{ 
+            register(this.state);
+            login(this.state);
+            this.props.history.push("/");
+        } catch (err){
+            this.setState({ error: err.message });
+        }
     }
 
     render = () => (
-        <form className="form-signin">
+        <form className="form-signin"> 
             <div className="text-center mb-4">
                 <h1 className="h3 mb-3 font-weight-normal">Login / Register</h1>
             </div>
@@ -15,8 +44,8 @@ class Login extends Component {
                 <label htmlFor="inputEmail">Username</label>
                 <input
                     name="username"
-                    onChange={() => {}}
-                    value={''}
+                    onChange={({target}) => this.setState({ username: target.value, error: '' })}
+                    value={this.state.username}
                     className="form-control"
                     placeholder="Username"
                     required
@@ -27,8 +56,8 @@ class Login extends Component {
                 <label htmlFor="inputPassword">Password</label>
                 <input
                     name="password"
-                    onChange={() => {}}
-                    value={''}
+                    onChange={({ target }) => this.setState({ password: target.value, error: '' })}
+                    value={this.state.password}
                     type="password"
                     className="form-control"
                     placeholder="Password"
@@ -37,8 +66,21 @@ class Login extends Component {
             </div>
     
             <div className="mt-5">
-                <button className="login btn btn-lg btn-primary btn-block" type="submit">Login</button>
-                <button className="register btn btn-lg btn-secondary btn-block" type="submit">Register</button>
+                <div 
+                    role='alert'
+                    className={this.state.error ? 'alert alert-danger': ''} 
+                    onClick={() => this.setState({ error: ''})}>{ this.state.error }
+                </div>
+                <button 
+                    className="login btn btn-lg btn-primary btn-block" 
+                    type="submit" 
+                    onClick={this.handleLogin}>Login
+                </button>
+                <button 
+                    className="register btn btn-lg btn-secondary btn-block" 
+                    type="submit" 
+                    onClick={this.hangleRegister}> Register
+                </button>
             </div>
         </form>
     )

@@ -40,3 +40,8 @@ mark {
 .RecipeItem .card:hover {
   border: 2px solid #495057;
 }
+
+a, a:hover, a.visited{
+  color: black;
+  text-decoration: none;
+}
