@@ -8,9 +8,13 @@ import User from './User'
 import { slugify } from '../helpers'
 import recipes from '../sample_data/recipes.json'
 
-const findRecipe = (recipeSlug) => {
-  return recipes.results.find( recipe => slugify(recipe.title) === recipeSlug) || null;
-}
+const LoginRoute = (props) => <Login {...props} />
+const ProfileRoute = (props) => <User {...props} />
+const RecipePageRoute = ({ match }) => 
+  <RecipePage recipe={findRecipe(match.params.recipe)}/>
+
+const HomeRoute = ({ match }) => 
+  <Home recipes={recipes.results} searchString={match.params.searchString} />
 
 const NavBar = (props) => {
   const searchString = props.location.pathname.indexOf('recipe') > -1 ? true : false;
@@ -19,20 +23,9 @@ const NavBar = (props) => {
     searchString={props.match && !searchString ? props.match.params.searchString : '' } {...props} 
   />
 )}
-  
-const HomeRoute = ({ match }) => (
-  <Home
-    recipes={recipes.results}
-    searchString={match.params.searchString}
-  />
-)
-const LoginRoute = (props) => <Login {...props} />
 
-const ProfileRoute = (props) => <User {...props} />
-
-const RecipePageRoute = ({ match }) => (
-  <RecipePage recipe={findRecipe(match.params.recipe)}/>
-)
+const findRecipe = (recipeSlug) => 
+  recipes.results.find( recipe => slugify(recipe.title) === recipeSlug) || null;
 
 class App extends Component {
   render() {
