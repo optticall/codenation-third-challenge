@@ -28,7 +28,7 @@ const HomeRoute = ({ match }) => (
 )
 const LoginRoute = (props) => <Login {...props} />
 
-const ProfileRoute = () => <User />
+const ProfileRoute = (props) => <User {...props} />
 
 const RecipePageRoute = ({ match }) => (
   <RecipePage recipe={findRecipe(match.params.recipe)}/>

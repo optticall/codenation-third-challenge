@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { login, register } from '../services/loginService';
+import { login, register, isLogged } from '../services/loginService';
 
 class Login extends Component {
     state = {
@@ -23,7 +23,7 @@ class Login extends Component {
         e.preventDefault();
         
         if(this.state.username === '' || !this.state.password === '')
-            return this.setState({ error: 'Usuário ou senha não pode ser vazio!'});
+            return this.setState({ error: 'User/Password can not be Empty'});
             
         try{ 
             register(this.state);
@@ -34,7 +34,10 @@ class Login extends Component {
         }
     }
 
-    render = () => (
+    render = () => {
+        if(isLogged()) this.props.history.push("/")
+
+        return (
         <form className="form-signin"> 
             <div className="text-center mb-4">
                 <h1 className="h3 mb-3 font-weight-normal">Login / Register</h1>
@@ -83,7 +86,7 @@ class Login extends Component {
                 </button>
             </div>
         </form>
-    )
+    )}
 }
 
-export default Login
+export default Login;

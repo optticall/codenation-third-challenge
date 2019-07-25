@@ -2,13 +2,10 @@ import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 class CommentsBlock extends Component {
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            comments: []
-        }
+    state = {
+        comments: []
     }
+
 
     renderComment = () => (
         <div className="Comment media text-muted pt-3">
