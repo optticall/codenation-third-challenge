@@ -19,7 +19,7 @@ class Login extends Component {
         }
     }
 
-    hangleRegister = e => {
+    handleRegister = e => {
         e.preventDefault();
         
         if(this.state.username === '' || !this.state.password === '')
@@ -82,7 +82,7 @@ class Login extends Component {
                 <button 
                     className="register btn btn-lg btn-secondary btn-block" 
                     type="submit" 
-                    onClick={this.hangleRegister}> Register
+                    onClick={this.handleRegister}> Register
                 </button>
             </div>
         </form>

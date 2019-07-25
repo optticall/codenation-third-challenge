@@ -5,13 +5,13 @@ const NAMESPACE = 'comments'
 
 const commentsService = {
     insert: (recipeSlug, comment) => {
-        if (!isLogged) {
+        if (!isLogged()) {
             throw new Error('User not logged')
         }
 
         const comments = localStorageWrapper.get(NAMESPACE) || {}
         comments[recipeSlug] = (comments[recipeSlug] || []).concat({
-            ...comment,
+            text: comment,
             author: getUser().username,
             date: +new Date()
         })

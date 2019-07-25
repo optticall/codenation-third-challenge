@@ -1,18 +1,39 @@
 import React, { Component } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import  commentsService from '../services/commentsService';
+import { slugify } from '../helpers';
 
 class CommentsBlock extends Component {
     state = {
-        comments: []
+        comments: [],
+        newComment: '',
+        error: ''
     }
 
+    componentWillMount = () => {
+        const comments = commentsService.get(slugify(this.props.recipe.title));
+        this.setState({
+            comments: [ ...comments ]
+        })
+    }
 
-    renderComment = () => (
+    hadleSubmit = () => {
+        if(this.state.newComment === '')
+            return this.setState({ error: "Comment can not be Empty" })
+
+        try {
+            commentsService.insert(slugify(this.props.recipe.title), this.state.newComment)
+        } catch (err){
+            this.setState({ error: err.message });
+        }
+    }
+
+    renderComment = (comment) => (
         <div className="Comment media text-muted pt-3">
             <FontAwesomeIcon className="mr-2" size="3x" icon="user-circle"/>
             <p className="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                <strong className="d-block text-gray-dark">@user</strong>
-                Comment
+                <strong className="d-block text-gray-dark">@{comment.author}</strong>
+                {comment.text}
             </p>
             {/* Icone deve aparecer somente quando o comentario for do usuario logado */}
             <FontAwesomeIcon icon="trash"/>
@@ -26,19 +47,25 @@ class CommentsBlock extends Component {
                     <h6 className="border-bottom border-gray pb-2 mb-0">
                         Comments
                     </h6>
-                    {this.renderComment()}
-                    {this.renderComment()}
-                    {this.renderComment()}
+                    { this.state.comments.length <= 0 
+                        ? 'No comments to show up'
+                        : this.state.comments.map( (comment, i) => 
+                        <span key={i}>{this.renderComment(comment)} </span> )}
                 </div>
                 <form>
+                    <div 
+                        role='alert'
+                        className={this.state.error ? 'alert alert-danger': ''} 
+                        onClick={() => this.setState({ error: ''})}>{ this.state.error }
+                    </div>
                     <div className="form-group">
                         <label htmlFor="exampleInputEmail1">
                             Comment
                         </label>
                         <textarea
                             disabled={false}
-                            value={''}
-                            onChange={() => {}}
+                            value={this.state.newComment}
+                            onChange={({ target }) => this.setState({ newComment: target.value })}
                             required="required"
                             className="form-control"
                             id="exampleInputEmail1"
@@ -49,8 +76,8 @@ class CommentsBlock extends Component {
                         disabled={false}
                         type="submit"
                         className="btn btn-primary"
-                    >
-                        Submit
+                        onClick={this.hadleSubmit}
+                    > Submit
                     </button>
                 </form>
             </div>

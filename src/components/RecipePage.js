@@ -13,7 +13,7 @@ const RecipePage = ({
                 <strong>Ingredients: </strong>{recipe.ingredients}
             </p>
         </div>
-        <CommentsBlock />
+        <CommentsBlock recipe={recipe} />
     </div>
 )
 
