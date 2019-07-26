@@ -7,7 +7,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.3.1",
     "@fortawesome/react-fontawesome": "^0.1.3",
     "bootstrap": "^4.1.3",
-    "codenation-jest-score": "^1.0.7",
+    "codenation-jest-score": "https://github.com/thecodenation/codenation-jest-score/tarball/master",
     "cross-env": "^5.2.0",
     "enzyme": "^3.6.0",
     "enzyme-adapter-react-16": "^1.5.0",

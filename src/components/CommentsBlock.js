@@ -12,13 +12,18 @@ class CommentsBlock extends Component {
     }
 
     componentWillMount = () => {
-        const comments = commentsService.get(slugify(this.props.recipe.title));
+        const comments = this.props.recipe 
+            ? commentsService.get(slugify(this.props.recipe.title))
+            : '';
         this.setState({
-            comments: [ ...comments ]
+            comments: [ ...comments ],
+            newComment: ''
         })
     }
 
-    hadleSubmit = () => {
+    hadleSubmit = e => {
+        e.preventDefault();
+
         if(this.state.newComment === '')
             return this.setState({ error: "Comment can not be Empty" })
 
