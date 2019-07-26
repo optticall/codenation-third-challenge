@@ -1,9 +1,9 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import { MemoryRouter, withRouter } from 'react-router-dom'
-import App from '../components/App'
-import loginService from './loginService'
-import commentsService from './commentsService'
+import App from './App'
+import loginService from '../services/loginService'
+import commentsService from '../services/commentsService'
 
 jest.mock('../sample_data/recipes.json', () => ({
     results: [
